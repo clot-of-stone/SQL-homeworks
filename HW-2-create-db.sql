@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS performers_genres (
 CREATE TABLE IF NOT EXISTS albums (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(60) NOT NULL,
-	release_year SMALLINT NOT NULL
+	release_year SMALLINT NOT NULL,
+	CHECK (release_year > 1800)
 );
 
 CREATE TABLE IF NOT EXISTS performers_albums (
@@ -31,14 +32,16 @@ CREATE TABLE IF NOT EXISTS performers_albums (
 CREATE TABLE IF NOT EXISTS tracks (
 	id SERIAL PRIMARY KEY,
 	track_name VARCHAR(60) NOT NULL,
-	run INTEGER NOT NULL,
+	run INTERVAL MINUTE TO SECOND NOT NULL,
+	CHECK (run < '99:59'),
 	in_album_id INTEGER NOT NULL REFERENCES albums(id)
 );
 
 CREATE TABLE IF NOT EXISTS songsters (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(60) NOT NULL,
-	release_year SMALLINT NOT NULL
+	release_year SMALLINT NOT NULL,
+	CHECK (release_year > 1800)
 );
 
 CREATE TABLE IF NOT EXISTS songsters_tracks (
